@@ -33,6 +33,12 @@
             background-color: #f7f7f7;
             background-repeat: no-repeat;
             border-radius: 20px;
+            align-items: center;
+
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            perspective: 800px; /* ✅ add perspective for 3D effect */
         }
 
         .card .front,
@@ -50,7 +56,7 @@
             transform-origin: left center; /* ✅ horizontal flip */
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            transition: all 1.5s ease-in-out;
+            transition: all 2s ease-in-out;
             border-radius: 20px;
             cursor: pointer;
         }
@@ -120,18 +126,18 @@
 
         .card .text-container #head {
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-size: 24px;
+            font-size: 50px;
             font-weight: 900;
             color: #0f0d58;
             margin-top: 40px;
         }
 
         .card p {
-            font-size: 15px;
+            font-size: 25px;
             font-family: 'Nobile';
             color: #feffff;
             font-style: italic;
-            line-height: 22px;
+            line-height: 40px;
             text-align: center;
             margin-top: 8px;
             align-items: center;
@@ -140,7 +146,7 @@
         .button-container {
             text-align: center;
             margin-top: 30px;
-            width: 90%;
+            width: 80%;
             max-width: 350px;
         }
 
@@ -200,20 +206,20 @@
             }
 
             .card .text-container #head {
-                font-size: 42px;
+                font-size: 60px;
                 margin-top: 150px;
             }
 
             .card p {
-                font-size: 20px;
-                line-height: 32px;
+                font-size: 30px;
+                line-height: 40px;
             }
 
             .big-btn {
-                font-size: 22px;
-                padding: 15px 40px;
+                font-size: 32px;
+                padding: 35px 60px;
                 max-width: none;
-                width: auto;
+                width: 300px;
             }
         }
     </style>
@@ -236,7 +242,7 @@
 
 <div class="button-container">
     <a href="cake.html">
-        <button class="big-btn">🎉 Next Surprise 🎉</button>
+        <button class="big-btn">Next Surprise</button>
     </a>
 </div>
 
