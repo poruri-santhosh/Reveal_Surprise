@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Teachers' Day Greeting Card</title>
+    <title>Rotating Teachers' Day Card</title>
     <style type="text/css">
         @import url('https://fonts.googleapis.com/css2?family=Nobile&display=swap');
 
@@ -15,284 +15,97 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             padding: 20px;
             box-sizing: border-box;
-            overflow-x: hidden; /* Prevents horizontal scrolling */
+            overflow: hidden;
         }
 
-        /* Card Container (Mobile-First Vertical Layout) */
-        .card {
+        /* The main card container */
+        .card-container {
             position: relative;
-            width: min(90vw, 400px); /* Sets max-width for better control on larger phones */
-            aspect-ratio: 9 / 16; /* Portrait ratio for mobile */
+            width: min(90vw, 400px);
+            aspect-ratio: 9 / 16;
             height: auto;
-            margin: 20px auto;
-            box-shadow: inset 5px 0px 8px rgba(0, 0, 0, 0.1);
-            background-color: #f7f7f7;
-            background-repeat: no-repeat;
+            transform-style: preserve-3d;
+            transition: transform 2s ease-in-out;
             border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* All card pages */
-        .card .front,
-        .card .page2,
-        .card .page3,
-        .card .page4,
-        .card .back {
+        /* The rotating card itself */
+        .card {
             position: absolute;
             width: 100%;
             height: 100%;
-            margin: -6px 0 0 -6px;
-            border: 6px solid #0f0d58;
-            backface-visibility: visible;
-            transform-style: preserve-3d;
-            transform-origin: 50% 0%; /* Folds from the top (mobile-first) */
-            background-repeat: no-repeat;
+            backface-visibility: hidden;
             background-size: 100% 100%;
-            transition: all 1.5s ease-in-out;
+            background-repeat: no-repeat;
+            border: 6px solid #0f0d58;
             border-radius: 20px;
-            cursor: pointer;
         }
 
-        /* Card images & backgrounds */
-        .card .front {
+        /* Front face of the card */
+        .card-front {
             background-image: url("Images/Teachers day.jpg");
-            z-index: 4;
-            transform: perspective(800px) rotateX(0deg);
-        }
-
-        .card .page2 {
-            background-color: #0b90c5;
-            z-index: 3;
-            transform: perspective(800px) rotateX(0deg);
-        }
-
-        .card .page3 {
-            background-image: url("Images/teacher3.webp");
+            transform: rotateY(0deg);
             z-index: 2;
-            transform: perspective(800px) rotateX(0deg);
         }
 
-        .card .page4 {
-            background-color: #e0e0e0;
+        /* Back face of the card */
+        .card-back {
             background-image: url("Images/6b1e9b1cba034f2678140d343c63ce1d.jpg");
-            z-index: 1;
-            transform: perspective(800px) rotateX(0deg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .card .back {
-            background-color: #08bdd1;
-            z-index: 0;
-        }
-
-        /* Card opening animations (Mobile) */
-        .card .front.open {
-            transform: perspective(800px) rotateX(-160deg);
-        }
-
-        .card .page2.open {
-            transform: perspective(800px) rotateX(-140deg);
-            box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.3), inset 0px 2px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .card .page3.open {
-            transform: perspective(800px) rotateX(-120deg);
-            box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.3), inset 0px 2px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .card .page4.open {
-            transform: perspective(800px) rotateX(-100deg);
-            box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.3), inset 0px 2px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Text container inside page2 */
-        .card .text-container {
-            width: 85%;
-            height: 85%;
-            position: relative;
-            transform: rotateX(180deg); /* Counter-rotate for text visibility */
+            background-color: #e0e0e0;
+            transform: rotateY(180deg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        /* Heading text */
-        .card .text-container #head {
+        /* Text content on the back of the card */
+        .card-back p {
+            font-family: 'Nobile', sans-serif;
+            font-size: 15px;
+            color: #0f0d58;
+            line-height: 22px;
+            margin: 0;
+        }
+
+        .card-back h3 {
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
             font-size: 24px;
-            font-weight: 900;
             color: #0f0d58;
-            margin-top: 40px;
+            margin: 0 0 10px 0;
         }
 
-        /* Paragraph text */
-        .card p {
-            font-size: 15px;
-            font-family: 'Nobile';
-            color: #feffff;
-            font-style: italic;
-            line-height: 22px;
-            margin-top: 8px;
-        }
-
-        /* Big Button Container */
-        .button-container {
-            text-align: center;
-            margin-top: 30px;
-            width: 90%;
-            max-width: 350px;
-        }
-
-        /* Big Button Styling */
-        .big-btn {
-            background-color: #0d40cd;
-            color: #fff;
-            font-size: 18px;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
-            transition: all 0.3s ease-in-out;
-            width: 100%;
-        }
-
-        .big-btn:hover {
-            background-color: #5e7ad6;
-            transform: scale(1.05);
-        }
-
-        /* ------------------ Desktop Styles ------------------ */
-        @media (min-width: 769px) {
-            .card {
-                width: min(1200px, 95vw);
-                aspect-ratio: 1200 / 600; /* Landscape ratio for desktop */
-                margin-top: 40px;
-            }
-
-            .card .front,
-            .card .page2,
-            .card .page3,
-            .card .page4,
-            .card .back {
-                border-width: 10px;
-                border-radius: 30px;
-                margin: -10px 0 0 -10px;
-                transform-origin: 0% 50%; /* Folds from the left (desktop) */
-            }
-
-            /* Card opening animations (Desktop) */
-            .card .front.open {
-                transform: perspective(800px) rotateY(-160deg);
-            }
-
-            .card .page2.open {
-                transform: perspective(800px) rotateY(-140deg);
-                box-shadow: 7px 0px 5px rgba(0, 0, 0, 0.3), inset 2px 0px 15px rgba(0, 0, 0, 0.1);
-            }
-
-            .card .page3.open {
-                transform: perspective(800px) rotateY(-120deg);
-                box-shadow: 7px 0px 5px rgba(0, 0, 0, 0.3), inset 2px 0px 15px rgba(0, 0, 0, 0.1);
-            }
-
-            .card .page4.open {
-                transform: perspective(800px) rotateY(-100deg);
-                box-shadow: 7px 0px 5px rgba(0, 0, 0, 0.3), inset 2px 0px 15px rgba(0, 0, 0, 0.1);
-            }
-
-            .card .text-container {
-                transform: rotateY(180deg);
-            }
-
-            .card .text-container #head {
-                font-size: 42px;
-                margin-top: 150px;
-            }
-
-            .card p {
-                font-size: 20px;
-                line-height: 32px;
-                transform: rotateY(180deg);
-            }
-
-            .big-btn {
-                font-size: 22px;
-                padding: 15px 40px;
-                max-width: none;
-                width: auto;
-            }
+        /* Rotation class applied by JavaScript */
+        .rotated {
+            transform: rotateY(180deg);
         }
     </style>
 </head>
 <body>
 
-<div class="card" id="card-container">
-    <div class="back"></div>
-    <div class="page4" id="page4"></div>
-    <div class="page3" id="page3"></div>
-    <div class="page2" id="page2">
-        <div class="text-container">
-            <p id="head">Happy Teachers Day <span id="name"></span> Sir!</p>
-            <p>Entha godava chesina chinna smile tho maku subject nerpinchinanduku chala thanks sir/madam! Mee efforts ni eppudu marchipomu.</p>
-            <p>Hope your day goes great!</p>
-        </div>
+<div class="card-container" id="card-container">
+    <div class="card card-front"></div>
+    <div class="card card-back">
+        <h3>Happy Teachers Day!</h3>
+        <p>Entha godava chesina chinna smile tho maku subject nerpinchinanduku chala thanks sir/madam! Mee efforts ni eppudu marchipomu.</p>
+        <p>Hope your day goes great!</p>
     </div>
-    <div class="front" id="front-page"></div>
-</div>
-
-<div class="button-container">
-    <a href="cake.html">
-        <button class="big-btn">🎉 Next Surprise 🎉</button>
-    </a>
 </div>
 
 <script>
-    // Fetch stored teacher name
-    const name = localStorage.getItem('teacherName') || 'Sir';
-    document.getElementById('name').textContent = name;
-
-    const frontPage = document.getElementById('front-page');
-    const page2 = document.getElementById('page2');
-    const page3 = document.getElementById('page3');
-    const page4 = document.getElementById('page4');
+    const cardContainer = document.getElementById('card-container');
     
-    let currentPage = 0;
-    const pages = [frontPage, page2, page3, page4];
-
-    // Open front page
-    frontPage.addEventListener('click', () => {
-        if (currentPage === 0) {
-            frontPage.classList.add('open');
-            currentPage = 1;
-        }
-    });
-
-    // Open page 2
-    page2.addEventListener('click', () => {
-        if (currentPage === 1) {
-            page2.classList.add('open');
-            currentPage = 2;
-        }
-    });
-
-    // Open page 3
-    page3.addEventListener('click', () => {
-        if (currentPage === 2) {
-            page3.classList.add('open');
-            currentPage = 3;
-        }
-    });
-
-    // Close card on page 4 click
-    page4.addEventListener('click', () => {
-        pages.forEach(page => page.classList.remove('open'));
-        currentPage = 0;
+    // Add a click event listener to the card container
+    cardContainer.addEventListener('click', () => {
+        cardContainer.classList.toggle('rotated');
     });
 </script>
 
