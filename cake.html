@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teachers Day Cake</title>
+  <style>
+    .cake-container {
+      position: relative;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .cake-container img {
+      width: 1500px; /* Adjusted for better scaling */
+      height: auto;
+      border-radius: 15px;
+      display: block;
+    }
+
+    .cake-text {
+      position: absolute;
+      top: 48%; /* vertical centering */
+      left: 50%; /* horizontal centering */
+      transform: translate(-50%, -50%);
+      color: rgb(75, 57, 57);
+      font-size: 37px;
+      line-height: 1.3;
+      margin-top: -50px;
+      font-weight: bold;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      text-shadow: 2px 2px 5px white; /* enhances readability */
+    }
+
+    /* Optional: make it responsive */
+    @media (max-width: 768px) {
+      .cake-container img {
+        width: 100%;
+      }
+      .cake-text {
+        font-size: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cake-container">
+    <img src="Images/46-4.png" alt="Cake Image">
+    <div class="cake-text">
+      Happy Teachers' <br> Day,<br>
+      <span id="name"></span> Sir
+    </div>
+  </div>
+
+  <script>
+    const name = localStorage.getItem('teacherName') || 'Santhosh';
+    document.getElementById('name').textContent = name;
+  </script>
+
+</body>
+</html>
