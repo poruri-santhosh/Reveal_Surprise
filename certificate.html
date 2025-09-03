@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Teacher Certificate</title>
+  <style>
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background-color: #fdf6e3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .certificate {
+      width: 80%;
+      max-width: 900px;
+      border: 10px solid #8b4513;
+      padding: 50px 40px;
+      text-align: center;
+      background: #fff8dc;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      position: relative;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .certificate h1 {
+      font-size: 50px;
+      margin-bottom: 10px;
+      color: #8b4513;
+    }
+
+    .certificate h2 {
+      font-size: 36px;
+      margin: 20px 0;
+      color: #444;
+    }
+
+    .certificate p {
+      font-size: 20px;
+      line-height: 1.6;
+      margin: 20px 0;
+    }
+
+    .certificate .signature {
+      margin-top: 50px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 50px;
+      flex-wrap: wrap;
+    }
+
+    .certificate .signature div {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .certificate .signature .line {
+      border-top: 2px solid #000;
+      width: 200px;
+      margin-bottom: 5px;
+    }
+
+    /* Download button */
+    #downloadBtn {
+      background-color: #0d40cd;
+      color: #fff;
+      border: none;
+      padding: 15px 30px;
+      font-size: 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+      transition: all 0.3s ease-in-out;
+    }
+
+    #downloadBtn:hover {
+      background-color: #5e7ad6;
+      transform: scale(1.05);
+    }
+
+    /* ------------------- Responsive Styles ------------------- */
+    @media (max-width: 768px) {
+      .certificate {
+        padding: 30px 20px;
+        width: 95%;
+      }
+
+      .certificate h1 {
+        font-size: 36px;
+      }
+
+      .certificate h2 {
+        font-size: 28px;
+      }
+
+      .certificate p {
+        font-size: 18px;
+      }
+
+      .certificate .signature {
+        padding: 0 20px;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .certificate .signature .line {
+        width: 150px;
+      }
+
+      #downloadBtn {
+        font-size: 18px;
+        padding: 12px 25px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .certificate h1 {
+        font-size: 28px;
+      }
+      .certificate h2 {
+        font-size: 22px;
+      }
+      .certificate p {
+        font-size: 16px;
+      }
+      .certificate .signature .line {
+        width: 120px;
+      }
+      #downloadBtn {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="certificate" id="certificate">
+    <h1>Certificate of Excellence</h1>
+    <p>This certificate is proudly presented to</p>
+    <h2 id="teacherName"></h2>
+    <p>For being the Best Teacher of</p>
+    <h2 id="teacherDept"></h2>
+    <p>We sincerely appreciate your dedication, guidance, and the positive impact you have made on your students.</p>
+
+    <div class="signature">
+      <div>
+        <div class="line"></div>
+        <p>Principal</p>
+      </div>
+      <div>
+        <div class="line"></div>
+        <p>Head of Department</p>
+      </div>
+    </div>
+  </div>
+
+  <button id="downloadBtn">Download Certificate as PDF</button>
+
+  <!-- Include html2canvas and jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    // ------------------ Dynamic Text ------------------
+    const name = localStorage.getItem('teacherName') || 'Santhosh';
+    const dept = localStorage.getItem('teacherDept') || 'AIML';
+    const gender = localStorage.getItem('selectedGender') || 'MALE';
+
+    let salutation = '';
+    if (gender === 'MALE') salutation = 'Sir';
+    else if (gender === 'FEMALE') salutation = 'Madam';
+    else salutation = '';
+
+    document.getElementById('teacherName').textContent = name + (salutation ? ' ' + salutation : '');
+    document.getElementById('teacherDept').textContent = dept;
+
+    // ------------------ Download PDF ------------------
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', () => {
+      const certificate = document.getElementById('certificate');
+
+      html2canvas(certificate, {scale: 2}).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF({
+          orientation: 'landscape',
+          unit: 'px',
+          format: [canvas.width, canvas.height]
+        });
+
+        pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+        pdf.save(`${name}_Certificate.pdf`);
+      });
+    });
+  </script>
+
+</body>
+</html>
