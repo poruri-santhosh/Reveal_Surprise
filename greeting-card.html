@@ -24,19 +24,21 @@
         /* ------------------ Mobile-First Styles ------------------ */
 
         .card {
-           position: relative;
-  width: min(90vw, 400px);
-  aspect-ratio: 9 / 16; /* ⚠️ Height will be calculated from this */
-  margin: 20px auto;
-  box-shadow: inset 5px 0px 8px rgba(0, 0, 0, 0.1);
-  background-color: #f7f7f7;
-  background-repeat: no-repeat;
-  border-radius: 20px;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  perspective: 800px;
+            position: relative;
+            width: min(90vw, 400px);
+            aspect-ratio: 9 / 16;
+            height: 1000px;
+            margin: 20px auto;
+            box-shadow: inset 5px 0px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f7f7f7;
+            background-repeat: no-repeat;
+            border-radius: 20px;
+            align-items: center;
+
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            perspective: 800px; /* ✅ add perspective for 3D effect */
         }
 
         .card .front,
@@ -175,11 +177,12 @@ margin-bottom: 20px;
         /* ------------------ Desktop Overrides ------------------ */
         @media (min-width: 769px) {
             .card {
-                 width: min(1200px, 95vw);
-    aspect-ratio: 1200 / 600; /* ⚠️ Height will be calculated from this */
-    margin-top: 40px;
-    margin-left: 60px;
-    margin-right: 60px;
+                width: min(1200px, 95vw);
+                aspect-ratio: 1200 / 600;
+                margin-top: 40px;
+                margin-left: 60px;
+                margin-right: 60px ;
+                height: 1400px;
 
             }
 
