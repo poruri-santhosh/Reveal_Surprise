@@ -254,8 +254,10 @@ font-weight: bolder;
     <div class="page3" id="page3"></div>
     <div class="page2" id="page2">
         <div class="text-container">
-            <p id="head">Happy Teachers Day <span id="name"></span> Sir!</p>
-            <p>Entha godava chesina chinna smile tho maku subject nerpinchinanduku chala thanks sir/madam! Mee efforts ni eppudu marchipomu.</p>
+           
+
+<p id="head">Happy Teachers Day <span id="name"></span>!</p>
+            <p>Entha godava chesina chinna smile tho maku subject nerpinchinanduku chala thanks <span id="salutation"></span>! Mee efforts ni eppudu marchipomu.</p>
             <p>Hope your day goes great!</p>
         </div>
     </div>
@@ -269,11 +271,20 @@ font-weight: bolder;
 </div>
 
 <script>
-    alert("Click on the card to open!");
+    alert("Click on the card to open!"); 
     // Fetch stored teacher name
     const name = localStorage.getItem('teacherName') || 'Sir';
     document.getElementById('name').textContent = name;
+   const gender = localStorage.getItem('selectedGender') || '';
 
+// Decide salutation based on gender
+let salutation = '';
+if (gender === 'MALE') salutation = 'Sir';
+else if (gender === 'FEMALE') salutation = 'Madam';
+else salutation = '';  // OTHER → no suffix
+
+// Update greeting
+document.getElementById('name').textContent = name + (salutation ? ' ' + salutation : '');
     const frontPage = document.getElementById('front-page');
     const page2 = document.getElementById('page2');
     const page3 = document.getElementById('page3');

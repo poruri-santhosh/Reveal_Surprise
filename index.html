@@ -15,7 +15,7 @@
     <input type="text" class="input" id="deptInput" placeholder="Enter your department (Eg: AIML)" required>
 
     <br><br>
-    <input type="radio" value="MALE" name="gender" checked> MALE
+    <input type="radio" value="MALE" name="gender" > MALE
     <input type="radio" value="FEMALE" name="gender"> FEMALE
     <input type="radio" value="OTHER" name="gender"> OTHER
     <br><br>
@@ -24,37 +24,56 @@
   </div>
 
   <script>
-    const btn = document.getElementById('submitBtn');
-    btn.addEventListener('click', () => {
-      const name = document.getElementById('userInput').value;
-      const dept = document.getElementById('deptInput').value;
-      const gender = document.querySelector('input[name="gender"]:checked');
+const btn = document.getElementById('submitBtn');
 
-      if (name.trim() === "") {
+btn.addEventListener('click', () => {
+    const name = document.getElementById('userInput').value.trim();
+    const dept = document.getElementById('deptInput').value.trim();
+
+    // Get selected gender radio button safely
+    const selectedGenderInput = document.querySelector('input[name="gender"]:checked');
+    if (!selectedGenderInput) {
+        alert("Please select your teacher's gender!");
+        return;
+    }
+    const gender = selectedGenderInput.value;
+
+    // Validation
+    if (name === "") {
         alert("Please enter your teacher's name!");
         return;
-      }
-      if (dept.trim() === "") {
+    }
+    if (dept === "") {
         alert("Please enter your department!");
         return;
-      }
-
-      // Save data to localStorage
-      localStorage.setItem('teacherName', name);
-      localStorage.setItem('teacherDept', dept);
-      localStorage.setItem('selectedGender', gender.value);
-
-      // Redirect to greeting page
-      window.location.href = 'greeting-card.html';
-    });
-
-    // On page load, restore saved gender if exists
-    window.onload = function () {
-      let savedGender = localStorage.getItem("selectedGender");
-      if (savedGender) {
-        document.querySelector(`input[name="gender"][value="${savedGender}"]`).checked = true;
-      }
     }
-  </script>
+
+    // Save data to localStorage
+    localStorage.setItem('teacherName', name);
+    localStorage.setItem('teacherDept', dept);
+    localStorage.setItem('selectedGender', gender);
+
+    // Redirect to greeting page
+    window.location.href = 'greeting-card.html';
+});
+
+// On page load, restore saved gender if exists
+window.onload = function () {
+    const savedGender = localStorage.getItem("selectedGender");
+
+    // If saved gender exists, restore it
+    if (savedGender) {
+        const genderRadio = document.querySelector(`input[name="gender"][value="${savedGender}"]`);
+        if (genderRadio) genderRadio.checked = true;
+    } 
+    // Else ensure no default selection
+    else {
+        const radios = document.querySelectorAll('input[name="gender"]');
+        radios.forEach(radio => radio.checked = false);
+    }
+}
+</script>
+
+
 </body>
 </html>

@@ -58,14 +58,25 @@
     <img src="Images/46-4.png" alt="Cake Image">
     <div class="cake-text">
       Happy Teachers' <br> Day,<br>
-      <span id="name"></span> Sir
+      <span id="name"></span> <span id="salutation"></span>!
     </div>
   </div>
 
-  <script>
-    const name = localStorage.getItem('teacherName') || 'Santhosh';
-    document.getElementById('name').textContent = name;
-  </script>
+<script>
+  // Get stored teacher name and gender
+  const name = localStorage.getItem('teacherName') || 'Santhosh';
+  const gender = localStorage.getItem('selectedGender') || 'MALE'; // default to MALE
+
+  // Decide salutation based on gender
+  let salutation = '';
+  if (gender === 'MALE') salutation = 'Sir';
+  else if (gender === 'FEMALE') salutation = 'Madam';
+  else salutation = ''; // OTHER → no suffix
+
+  // Update the cake text
+  document.getElementById('name').textContent = name + (salutation ? ' ' + salutation : '');
+</script>
+
 
 </body>
 </html>
