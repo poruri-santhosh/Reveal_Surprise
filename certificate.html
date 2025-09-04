@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Best Teacher Certificate</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+
   <style>
     body {
       font-family: 'Georgia', 'Times New Roman', serif;
@@ -23,7 +27,7 @@
       padding: 50px 40px;
       text-align: center;
       background: #fff8dc;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       position: relative;
       border-radius: 15px;
       margin-bottom: 20px;
@@ -47,23 +51,27 @@
       margin: 20px 0;
     }
 
+    /* Signatures section */
     .certificate .signature {
       margin-top: 50px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       padding: 0 50px;
-      flex-wrap: wrap;
     }
 
-    .certificate .signature div {
+    .certificate .signature > div {
       text-align: center;
       margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .certificate .signature .line {
-      border-top: 2px solid #000;
-      width: 200px;
+      font-family: 'Pacifico', cursive;
+      font-size: 28px;
       margin-bottom: 5px;
+      color: #000;
     }
 
     /* Download button */
@@ -75,7 +83,7 @@
       font-size: 20px;
       border-radius: 10px;
       cursor: pointer;
-      box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
       transition: all 0.3s ease-in-out;
     }
 
@@ -84,7 +92,7 @@
       transform: scale(1.05);
     }
 
-    /* ------------------- Responsive Styles ------------------- */
+    /* Responsive styles */
     @media (max-width: 768px) {
       .certificate {
         padding: 30px 20px;
@@ -104,13 +112,8 @@
       }
 
       .certificate .signature {
-        padding: 0 20px;
+        padding: 0 10px;
         flex-direction: column;
-        align-items: center;
-      }
-
-      .certificate .signature .line {
-        width: 150px;
       }
 
       #downloadBtn {
@@ -123,15 +126,19 @@
       .certificate h1 {
         font-size: 28px;
       }
+
       .certificate h2 {
         font-size: 22px;
       }
+
       .certificate p {
         font-size: 16px;
       }
+
       .certificate .signature .line {
-        width: 120px;
+        font-size: 24px;
       }
+
       #downloadBtn {
         font-size: 16px;
         padding: 10px 20px;
@@ -140,22 +147,26 @@
   </style>
 </head>
 <body>
-
   <div class="certificate" id="certificate">
     <h1>Certificate of Excellence</h1>
-    <p>This certificate is proudly presented to</p>
-    <h2 id="teacherName"></h2>
-    <p>For being the Best Teacher of</p>
-    <h2 id="teacherDept"></h2>
-    <p>We sincerely appreciate your dedication, guidance, and the positive impact you have made on your students.</p>
+    <p>
+      This certificate is proudly presented to
+      <span id="name"></span>
+      for being the Best Teacher of
+      <span id="teacherDept"></span>. <br />
+      Your unwavering dedication, exceptional guidance, and inspiring teaching methods
+      have significantly contributed to the academic and personal growth of your students.
+      We sincerely appreciate your outstanding efforts and exemplary service in shaping
+      the future of our students.
+    </p>
 
     <div class="signature">
       <div>
-        <div class="line"></div>
+        <div class="line">Dr. C.V. Raman</div>
         <p>Principal</p>
       </div>
       <div>
-        <div class="line"></div>
+        <div class="line">Dr. A.P.J. Abdul Kalam</div>
         <p>Head of Department</p>
       </div>
     </div>
@@ -163,7 +174,7 @@
 
   <button id="downloadBtn">Download Certificate as PDF</button>
 
-  <!-- Include html2canvas and jsPDF -->
+  <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
@@ -173,12 +184,9 @@
     const dept = localStorage.getItem('teacherDept') || 'AIML';
     const gender = localStorage.getItem('selectedGender') || 'MALE';
 
-    let salutation = '';
-    if (gender === 'MALE') salutation = 'Sir';
-    else if (gender === 'FEMALE') salutation = 'Madam';
-    else salutation = '';
-
-    document.getElementById('teacherName').textContent = name + (salutation ? ' ' + salutation : '');
+    let salutation = gender === 'MALE' ? 'Sir' : gender === 'FEMALE' ? 'Madam' : '';
+    document.getElementById('name').textContent =
+      name + (salutation ? ' ' + salutation : '');
     document.getElementById('teacherDept').textContent = dept;
 
     // ------------------ Download PDF ------------------
@@ -186,9 +194,10 @@
     downloadBtn.addEventListener('click', () => {
       const certificate = document.getElementById('certificate');
 
-      html2canvas(certificate, {scale: 2}).then(canvas => {
+      html2canvas(certificate, { scale: 2 }).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        const pdf = new jspdf.jsPDF({
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
           orientation: 'landscape',
           unit: 'px',
           format: [canvas.width, canvas.height]
@@ -199,6 +208,5 @@
       });
     });
   </script>
-
 </body>
 </html>
