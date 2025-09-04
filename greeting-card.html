@@ -276,7 +276,9 @@ margin-top: 40px;
         <button class="big-btn">Next Surprise</button>
     </a>
 </div>
-
+<audio id="bg-music" autoplay loop muted>
+  <source src="greetingcard.mp3" type="audio/mpeg">
+</audio>
 <script>
     alert("Click on the card to open!"); 
     // Fetch stored teacher name
@@ -329,6 +331,16 @@ document.getElementById('name').textContent = name + (salutation ? ' ' + salutat
         pages.forEach(page => page.classList.remove('open'));
         currentPage = 0;
     });
+    document.addEventListener("click", () => {
+    const audio = document.getElementById("bg-music");
+    audio.muted = false; // unmute after first user interaction
+    audio.play();
+  }, { once: true });
+  // Before navigating to cake page, store a flag
+document.querySelector('a[href="cake.html"]').addEventListener('click', () => {
+    sessionStorage.setItem('playMusic', 'true'); // flag for cake page
+});
+
 </script>
 
 </body>

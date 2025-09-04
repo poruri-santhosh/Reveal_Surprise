@@ -12,7 +12,7 @@
     }
 
     .cake-container img {
-      width: 1500px; /* Adjusted for better scaling */
+      width: 1500px;
       height: auto;
       border-radius: 15px;
       display: block;
@@ -20,52 +20,36 @@
 
     .cake-text {
       position: absolute;
-      top: 44%; /* vertical centering */
-      left: 53%; /* horizontal centering */
+      top: 44%;
+      left: 53%;
       transform: translate(-50%, -50%);
       color: rgb(75, 57, 57);
       font-size: 34px;
       line-height: 1.3;
-      margin-top: -50px;
       font-weight: bold;
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      text-shadow: 2px 2px 5px white; /* enhances readability */
+      text-shadow: 2px 2px 5px white;
     }
+
     button {
-  padding: 12px;
-  width: 150px;
-  text-align: center;
-  border-radius: 6px;
-  border: none;
-  background-color: #0d40cd;
-  color: #fff;
-  font-weight: 600;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-  cursor: pointer;
-  margin: 10px auto 0 auto;
-  box-shadow: 1px 1px 5px #8E8E93;
-}
+      padding: 12px;
+      width: 150px;
+      text-align: center;
+      border-radius: 6px;
+      border: none;
+      background-color: #0d40cd;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      margin: 10px auto 0 auto;
+      box-shadow: 1px 1px 5px #8E8E93;
+      display: block;
+    }
 
-    /* Make cake page responsive */
-@media (max-device-width: 726px) {
-  .cake-container img {
-    width: 100%;
-    height: auto;
-  }
-
-  .cake-text {
-    font-size: 3.4vmin; 
-    margin-top: 0;
-    top: 38%;
-    line-height: 1.4;
-    /* text-align: center; */
-    padding: 10px;
-    /* padding-top:0px; */
-  }
-  button {
-    width: 100%;
-  }
-
+    @media (max-device-width: 726px) {
+      .cake-container img { width: 100%; height: auto; }
+      .cake-text { font-size: 3.4vmin; top: 38%; line-height: 1.4; padding: 10px; }
+      button { width: 100%; }
     }
   </style>
 </head>
@@ -77,24 +61,39 @@
       Happy Teachers' <br> Day,<br>
       <span id="name"></span> <span id="salutation"></span>!
     </div>
-   <a href="certificate.html"><button>Get Certificate</button></a>
+    <a href="certificate.html"><button>Get Certificate</button></a>
   </div>
+
+  <audio id="bg-music" loop>
+    <source src="Cake.mp3" type="audio/mpeg">
+  </audio>
 
 <script>
   // Get stored teacher name and gender
   const name = localStorage.getItem('teacherName') || 'Santhosh';
-  const gender = localStorage.getItem('selectedGender') || 'MALE'; // default to MALE
+  const gender = localStorage.getItem('selectedGender') || 'MALE';
 
-  // Decide salutation based on gender
   let salutation = '';
   if (gender === 'MALE') salutation = 'Sir';
   else if (gender === 'FEMALE') salutation = 'Madam';
-  else salutation = ''; // OTHER → no suffix
+  else salutation = '';
 
-  // Update the cake text
-  document.getElementById('name').textContent = name + (salutation ? ' ' + salutation : '');
+  document.getElementById('name').textContent = name;
+  document.getElementById('salutation').textContent = salutation;
+
+  // Play music only if user clicked the card before navigating
+  window.addEventListener('DOMContentLoaded', () => {
+    const playMusic = sessionStorage.getItem('playMusic');
+    if (playMusic === 'true') {
+      const audio = document.getElementById('bg-music');
+      audio.muted = false; // unmute
+      audio.play().catch(() => {
+        console.log('Autoplay blocked, browser requires interaction');
+      });
+      sessionStorage.removeItem('playMusic'); // reset flag
+    }
+  });
 </script>
-
 
 </body>
 </html>
